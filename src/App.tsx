@@ -1,7 +1,12 @@
+import { useState } from "react";
+import { Suspense } from "react";
 const App = () => {
+  const [count, setCount] = useState(0);
+
   return (
     <div>
-      <h1>App</h1>
+      Count: {count}
+      <button onClick={() => setCount((count) => count + 1)}>Increase count</button>
     </div>
   );
 };
