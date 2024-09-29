@@ -2,6 +2,12 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 /** @type {import('webpack').Configuration} */
 module.exports = {
+  devServer: {
+    hot: true,
+    host: "localhost",
+    port: 3001,
+  },
+
   mode: "development",
   entry: "./src/index.tsx",
   output: {

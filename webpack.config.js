@@ -1,11 +1,14 @@
 // webpack.config.js
 const path = require("path");
+const dotenv = require("dotenv");
 const webpack = require("webpack");
 const nodeExternals = require("webpack-node-externals");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { devServer } = require("./webpack.client");
+
+// const { devServer } = require("./webpack.client");
 module.exports = [
   {
+    mode: "development",
     name: "server",
     target: "node",
     externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
@@ -37,18 +40,13 @@ module.exports = [
   },
   {
     name: "client",
-    target: "web",
+
+    target: ["web", "es5"],
     entry: "./src/index.tsx",
-    devServer: {
-      contentBase: path.join(__dirname, "public"),
-      compress: true,
-      port: 3000,
-      publicPath: "/",
-      historyApiFallback: true,
-    },
     output: {
       path: path.resolve(__dirname, "dist"),
       filename: "client.js",
+      publicPath: "/",
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
@@ -69,6 +67,11 @@ module.exports = [
     },
     resolve: {
       extensions: [".ts", ".tsx", ".js"],
+    },
+    devServer: {
+      compress: true,
+      port: 3090,
+      open: true,
     },
   },
 ];
