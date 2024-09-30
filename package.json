@@ -8,6 +8,7 @@
     "build:server": "webpack --config webpack.server.js",
     "start": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production",
+    "dev": "nodemon --exec ts-node ./server/index.tsx",
     "test": "concurrently \"nodemon --exec ts-node ./server/index.tsx\" \"webpack serve --mode development\""
   },
   "keywords": [],

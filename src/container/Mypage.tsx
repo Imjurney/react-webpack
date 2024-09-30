@@ -23,8 +23,11 @@ const Email = styled.p`
 
 const user = { name: "홍길동", email: "hong@example.com" };
 
+const alertComment = () => {
+  alert("Hello World!");
+};
 const MyPage = () => (
-  <ProfileCard>
+  <ProfileCard onClick={alertComment}>
     <Name>{user.name}</Name>
     <Email>{user.email}</Email>
   </ProfileCard>

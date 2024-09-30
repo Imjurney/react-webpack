@@ -26,6 +26,8 @@ const ListPage = () => {
       setData(result.data.slice(0, 400));
     };
 
+    console.log("fetch data", data);
+
     fetchData();
   }, []);
 
@@ -33,7 +35,7 @@ const ListPage = () => {
     <ListContainer>
       {data.map((item) => (
         <ListItem key={item.id}>
-          <h2>{item.title}</h2>
+          <div>{item.title}</div>
           <p>{item.body}</p>
         </ListItem>
       ))}
