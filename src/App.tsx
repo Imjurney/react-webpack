@@ -3,6 +3,7 @@ import { Link, Route, Switch } from "react-router-dom";
 import HomePage from "./container/Home";
 import ListPage from "./container/List";
 import MyPage from "./container/Mypage";
+import GlobalStyles from "./GlobalStyles";
 
 const Navbar = styled.nav`
   display: flex;
@@ -47,14 +48,12 @@ const App = () => {
   return (
     <div>
       <NavigationBar />
+      <GlobalStyles />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/list" component={ListPage} />
         <Route exact path="/mypage" component={MyPage} />
       </Switch>
-      {/* {routes.map((route, index) => (
-        <Route key={index} exact {...route} />
-      ))} */}
     </div>
   );
 };

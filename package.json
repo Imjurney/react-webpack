@@ -8,8 +8,7 @@
     "build:server": "webpack --config webpack.server.js",
     "start": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production",
-    "dev": "nodemon --exec ts-node ./server/index.tsx",
-    "test": "concurrently \"nodemon --exec ts-node ./server/index.tsx\" \"webpack serve --mode development\""
+    "dev": "nodemon --exec ts-node ./server/index.tsx"
   },
   "keywords": [],
   "author": "",
@@ -38,6 +37,7 @@
     "html-webpack-plugin": "^5.6.0",
     "nodemon": "^3.1.7",
     "pug": "^3.0.3",
+    "styled-reset": "^4.5.2",
     "ts-loader": "^9.5.1",
     "typescript": "^5.6.2",
     "webpack": "^5.95.0",
