@@ -1,7 +1,7 @@
 import { Switch, Route } from "react-router-dom";
-import HomePage from "src/container/Home";
-import ListPage from "src/container/List";
-import MyPage from "src/container/Mypage";
+import HomePage from "@/container/Home";
+import ListPage from "@/container/List";
+import MyPage from "@/container/Mypage";
 
 const RouterComponent = () => {
   return (

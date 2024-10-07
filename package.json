@@ -6,9 +6,9 @@
     "dev-server": "webpack-dev-server --open",
     "build:client": "webpack --config webpack.client.js",
     "build:server": "webpack --config webpack.server.js",
-    "start": "webpack-dev-server --mode development --open --hot",
+    "start": "webpack --mode development",
     "build": "webpack --mode production",
-    "dev": "nodemon --exec ts-node ./server/index.tsx"
+    "dev": "nodemon --exec ts-node -r tsconfig-paths/register server/index.tsx"
   },
   "keywords": [],
   "author": "",
@@ -37,8 +37,10 @@
     "html-webpack-plugin": "^5.6.0",
     "nodemon": "^3.1.7",
     "pug": "^3.0.3",
+    "react-hot-loader": "^4.13.1",
     "styled-reset": "^4.5.2",
     "ts-loader": "^9.5.1",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.6.2",
     "webpack": "^5.95.0",
     "webpack-cli": "^5.1.4",
@@ -46,6 +48,7 @@
     "webpack-dev-server": "^5.1.0",
     "webpack-hot-middleware": "^2.26.1",
     "webpack-hot-server-middleware": "^0.6.1",
+    "webpack-merge": "^6.0.1",
     "webpack-node-externals": "^3.0.0"
   },
   "eslintConfig": {

@@ -1,10 +1,23 @@
 import styled, { keyframes } from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { UserContext } from "../App";
 const HomePage = () => {
+  const user: any[] = useContext(UserContext);
+  const [userInfo, setUserInfo] = useState<any[]>([]);
+  useEffect(() => {
+    setUserInfo(user);
+  }, [user]);
   const [count, setCount] = useState(0);
+
+  const firstUser = userInfo.filter((user) => user.id === 1).map((user) => user.name);
+
   return (
     <GradientBackground>
-      <WelcomeMessage>환영합니다!</WelcomeMessage>
+      <WelcomeMessage>
+        환영합니다!
+        {firstUser}
+      </WelcomeMessage>
       <CountMessage>Count: {count} </CountMessage>
       <Button onClick={() => setCount((count) => count + 1)}>Increase count</Button>
     </GradientBackground>

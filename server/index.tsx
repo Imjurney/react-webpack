@@ -15,9 +15,8 @@ const sslKeyFile = require("dotenv").config().parsed.SSL_KEY_FILE;
 const App = require("../src/App").default;
 const webpack = require("webpack");
 const webpackDevMiddleware = require("webpack-dev-middleware");
-const webpackHotMiddleware = require("webpack-hot-middleware");
-const config = require("../webpack.config");
-
+const config = require("../webpack.dev");
+const axios = require("axios");
 const sslCrt = fs.readFileSync(sslCrtFile, "utf-8");
 const sslKey = fs.readFileSync(sslKeyFile, "utf-8");
 app.set("view engine", "pug");
@@ -27,260 +26,43 @@ const compiler = webpack(config);
 
 const context = {};
 const sheet = new ServerStyleSheet();
-// const html = (url?: string) => {
-//   return renderToString(
-//     sheet.collectStyles(
-//       <StaticRouter location={url} context={context}>
-//         <App />
-//       </StaticRouter>
-//     )
-//   );
-// };
-
-// app.get("/", (req: Request, res: Response, next: NextFunction) => {
-//   try {
-//     const appString = html(location.home);
-//     res.render("index", {
-//       styles,
-//       script: {
-//         bundle: "client.js",
-//       },
-//       appString,
-//     });
-//     res.end();
-//   } catch (error) {
-//     next(error); // 에러를 에러 처리 미들웨어로 전달
-//   } finally {
-//     sheet.seal();
-//   }
-// });
-
-// app.get("/list", (req: Request, res: Response, next: NextFunction) => {
-//   try {
-//     const appString = html(location.list);
-//     res.render("index", {
-//       styles,
-//       script: {
-//         bundle: "client.js",
-//       },
-//       appString,
-//     });
-//     res.end();
-//   } catch (error) {
-//     next(error); // 에러를 에러 처리 미들웨어로 전달
-//   } finally {
-//     sheet.seal();
-//   }
-// });
-// try {
-//   app.get("/", (req: Request, res: Response) => {
-//     const appString = html;
-//     res.render("index", {
-//       styles,
-//       script: {
-//         bundle: "client.js",
-//       },
-//       appString,
-//     });
-//     res.end();
-//   });
-// } catch (error) {
-//   console.error(error);
-// } finally {
-//   sheet.seal();
-// }
 
 function handleRoute(req: Request, res: Response, next: NextFunction) {
-  const context = {};
-
-  const html = renderToString(
-    sheet.collectStyles(
-      <StaticRouter location={req.url} context={context}>
-        <App />
-      </StaticRouter>
-    )
-  );
-  const styles = sheet.getStyleTags();
-  sheet.getStyleElement();
-  const appString = html;
-  res.render("index", {
-    styles,
-    script: {
-      bundle: "client.js",
-    },
-    appString,
-  });
-  // res.end();
+  try {
+    const html = renderToString(
+      sheet.collectStyles(
+        <StaticRouter location={req.url} context={context}>
+          <App />
+        </StaticRouter>
+      )
+    );
+    const styles = sheet.getStyleTags();
+    sheet.getStyleElement();
+    const appString = html;
+    res.render("index", {
+      styles,
+      script: {
+        bundle: "client.js",
+      },
+      appString,
+    });
+  } catch (error) {
+    next(error);
+  }
 }
 
 app.get("/", handleRoute);
 app.get("/list", handleRoute);
 app.get("/mypage", handleRoute);
-
-// app.get("/", (req: Request, res: Response, next: NextFunction) => {
-//   const context = {};
-
-//   const html = renderToString(
-//     sheet.collectStyles(
-//       <StaticRouter location={req.url} context={context}>
-//         <App />
-//       </StaticRouter>
-//     )
-//   );
-//   const styles = sheet.getStyleTags();
-//   sheet.getStyleElement();
-//   const appString = html;
-//   res.render("index", {
-//     styles,
-//     script: {
-//       bundle: "client.js",
-//     },
-//     appString,
-//   });
-//   // res.end();
-//   // try {
-//   //   const appString = html(req.path);
-//   //   res.render("index", {
-//   //     styles,
-//   //     script: {
-//   //       bundle: "client.js",
-//   //     },
-//   //     appString,
-//   //   });
-//   //   res.end();
-//   // } catch (error) {
-//   //   next(error); // 에러를 에러 처리 미들웨어로 전달
-//   // } finally {
-//   //   sheet.seal();
-//   // }
-//   // res.send(`
-//   //   <!DOCTYPE html>
-//   //   <html>
-//   //      <head>
-//   //   <meta charset="UTF-8" />
-//   //   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-//   //   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-//   //   <title>My React App</title>
-
-//   // </head>
-//   //     <body>
-//   //       <div id="root">${html}</div>
-
-//   //     </body>
-//   //   </html>
-//   // `);
-//   // res.send(`   <script defer src="/bundle.js"></script>`);
+// app.get("*", (req: Request, res: Response) => {
+//   res.redirect("/");
 // });
+// api 테스트
+app.get("/api/users", async (req: Request, res: Response) => {
+  const response = await axios.get("https://jsonplaceholder.typicode.com/users");
+  res.json(response.data.slice(0, 10));
+});
 
-// app.get("/list", (req: Request, res: Response, next: NextFunction) => {
-//   const context = {};
-
-//   const html = renderToString(
-//     sheet.collectStyles(
-//       <StaticRouter location={req.url} context={context}>
-//         <App />
-//       </StaticRouter>
-//     )
-//   );
-//   const styles = sheet.getStyleTags();
-//   sheet.getStyleElement();
-//   const appString = html;
-//   res.render("index", {
-//     styles,
-//     script: {
-//       bundle: "client.js",
-//     },
-//     appString,
-//   });
-//   // res.end();
-//   // try {
-//   //   const appString = html(req.path);
-//   //   res.render("index", {
-//   //     styles,
-//   //     script: {
-//   //       bundle: "client.js",
-//   //     },
-//   //     appString,
-//   //   });
-//   //   res.end();
-//   // } catch (error) {
-//   //   next(error); // 에러를 에러 처리 미들웨어로 전달
-//   // } finally {
-//   //   sheet.seal();
-//   // }
-//   // res.send(`
-//   //   <!DOCTYPE html>
-//   //   <html>
-//   //      <head>
-//   //   <meta charset="UTF-8" />
-//   //   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-//   //   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-//   //   <title>My React App</title>
-
-//   // </head>
-//   //     <body>
-//   //       <div id="root">${html}</div>
-
-//   //     </body>
-//   //   </html>
-//   // `);
-//   // res.send(`   <script defer src="/bundle.js"></script>`);
-// });
-
-// app.get("/mypage", (req: Request, res: Response, next: NextFunction) => {
-//   const context = {};
-
-//   const html = renderToString(
-//     sheet.collectStyles(
-//       <StaticRouter location={req.url} context={context}>
-//         <App />
-//       </StaticRouter>
-//     )
-//   );
-//   const styles = sheet.getStyleTags();
-//   sheet.getStyleElement();
-//   const appString = html;
-//   res.render("index", {
-//     styles,
-//     script: {
-//       bundle: "client.js",
-//     },
-//     appString,
-//   });
-//   // res.end();
-//   // try {
-//   //   const appString = html(req.path);
-//   //   res.render("index", {
-//   //     styles,
-//   //     script: {
-//   //       bundle: "client.js",
-//   //     },
-//   //     appString,
-//   //   });
-//   //   res.end();
-//   // } catch (error) {
-//   //   next(error); // 에러를 에러 처리 미들웨어로 전달
-//   // } finally {
-//   //   sheet.seal();
-//   // }
-//   // res.send(`
-//   //   <!DOCTYPE html>
-//   //   <html>
-//   //      <head>
-//   //   <meta charset="UTF-8" />
-//   //   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-//   //   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-//   //   <title>My React App</title>
-
-//   // </head>
-//   //     <body>
-//   //       <div id="root">${html}</div>
-
-//   //     </body>
-//   //   </html>
-//   // `);
-//   // res.send(`   <script defer src="/bundle.js"></script>`);
-// });
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err);
   res.status(500).send("Something broke!");
@@ -291,8 +73,6 @@ app.use(
     publicPath: config[1].output.publicPath,
   })
 );
-
-app.use(webpackHotMiddleware(compiler));
 
 // async function handler(req: Request, res: Response) {
 //   const { pipe, abort } = renderToPipeableStream(<App />, {
