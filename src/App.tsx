@@ -1,8 +1,5 @@
-import styled, { keyframes } from "styled-components";
-import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
-import HomePage from "./container/Home";
-import ListPage from "./container/List";
-import MyPage from "./container/Mypage";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 import GlobalStyles from "./GlobalStyles";
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
@@ -51,18 +48,6 @@ function ContextProvider({ children }: User) {
 
   return <UserContext.Provider value={users}>{children}</UserContext.Provider>;
 }
-// const theme = {
-//   light: {
-//     mainColor: "#242424",
-//     textColor: "#242424",
-//     backgroundColor: "#fefefe",
-//   },
-//   dark: {
-//     mainColor: "#fefefe",
-//     textColor: "#fefefe",
-//     backgroundColor: "#242424",
-//   },
-// };
 
 const NavigationBar = () => (
   <Navbar>
@@ -79,20 +64,12 @@ const NavigationBar = () => (
 );
 
 const App = () => {
-  // const [count, setCount] = useState(0);
   return (
     <>
       <ContextProvider>
         <NavigationBar />
         <GlobalStyles />
-
         <RouterComponent />
-
-        {/* <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/list" component={ListPage} />
-          <Route exact path="/mypage" component={MyPage} />
-        </Switch> */}
       </ContextProvider>
     </>
   );

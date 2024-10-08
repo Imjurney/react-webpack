@@ -31,7 +31,7 @@ module.exports = [
     name: "client",
     mode: "development",
     target: ["web", "es5"],
-    entry: "./src/index.tsx",
+    entry: "/src/index.tsx",
     output: {
       path: path.resolve(__dirname, "dist"),
       filename: "client.js",
@@ -52,7 +52,7 @@ module.exports = [
       hot: true,
       historyApiFallback: true,
       compress: true,
-      port: 3090,
+      port: 3000,
       open: true,
     },
   }),

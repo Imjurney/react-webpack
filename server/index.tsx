@@ -54,10 +54,7 @@ function handleRoute(req: Request, res: Response, next: NextFunction) {
 app.get("/", handleRoute);
 app.get("/list", handleRoute);
 app.get("/mypage", handleRoute);
-// app.get("*", (req: Request, res: Response) => {
-//   res.redirect("/");
-// });
-// api 테스트
+
 app.get("/api/users", async (req: Request, res: Response) => {
   const response = await axios.get("https://jsonplaceholder.typicode.com/users");
   res.json(response.data.slice(0, 10));
